@@ -52,7 +52,7 @@ class DroneForm(QWidget):
         self.setLayout(layout)
 
         # Set up the database connection
-        database_url = 'sqlite:///drones2.db'
+        database_url = 'sqlite:///drones2.db.sqlite3'
         engine = create_engine(database_url)
         Base.metadata.create_all(engine)
         Session = sessionmaker(bind=engine)
