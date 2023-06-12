@@ -57,10 +57,10 @@ class MainWindow(QMainWindow):
         drone_label = QLabel("Drone ID: DRN001")  # Create a QLabel for drone ID
         speed_label = QLabel("Speed:")  # Create a QLabel for speed
 
-        company_label.setAlignment(Qt.AlignCenter)  # Set alignment of the company label to center
-        software_label.setAlignment(Qt.AlignCenter)  # Set alignment of the software label to center
-        drone_label.setAlignment(Qt.AlignCenter)  # Set alignment of the drone label to center
-        speed_label.setAlignment(Qt.AlignCenter)  # Set alignment of the speed label to center
+        # company_label.setAlignment(Qt.AlignCenter)  # Set alignment of the company label to center
+        # software_label.setAlignment(Qt.AlignCenter)  # Set alignment of the software label to center
+        # drone_label.setAlignment(Qt.AlignCenter)  # Set alignment of the drone label to center
+        # speed_label.setAlignment(Qt.AlignCenter)  # Set alignment of the speed label to center
 
         label_layout = QVBoxLayout()  # Create a QVBoxLayout to hold the labels
         label_layout.addWidget(company_label)  # Add the company label to the layout
@@ -100,9 +100,11 @@ class MainWindow(QMainWindow):
 
             # Get the latest time value from the database
             latest_time = self.session.query(DroneData.time_).order_by(DroneData.time_.desc()).first()
-
+            ## latest_time has the first value of the time row sorted in desc order, but it is in the tuple form, the first() func returns data in tuple form so the time will be (10,)
+            ## now when we take latest_time[0], then the value 10 is only returned
+            
             # Calculate the new time value based on the latest time
-            time_ = latest_time[0] + 1 if latest_time else 0
+            time_ = latest_time[0] + 1 if latest_time else 1
 
             drone_data = DroneData(time_=time_, speed=speed_value, altitude=0)  # Create a new DroneData instance
             self.session.add(drone_data)  # Add the DroneData instance to the session
